@@ -3,6 +3,12 @@
 
 include("nav.php");
 
+ use PHPMailer\PHPMailer\PHPMailer;
+ use PHPMailer\PHPMailer\Exception;
+
+require 'PHPMailer/PHPMailer/src/Exception.php';
+require 'PHPMailer/PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/PHPMailer/src/SMTP.php';
 
 $first_name = $middle_name = $last_name = $gender = $preffix = $seven_digit = $email = "";
 
@@ -93,16 +99,41 @@ if(isset($_POST["btnRegister"])){
                                     $shuffled = substr( str_shuffle( $str ),0, $length );
                                     return $shuffled;
                                 }
+
                                 $password = random_password(8);
 
-                                include("connections.php");
+                                $mail = new PHPMailer(true);
+
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';
+$mail->SMTPAuth = true;
+$mail->Username = 'lorenzjohndelizo@gmail.com';
+$mail->Password = 'bktxqrdrzniyeibq';
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
+
+$mail->setFrom('lorenzjohndelizo@gmail.com');
+$mail->addAddress($email);
+
+$mail->Subject = 'Your Account Password';
+$mail->Body = "Hello $first_name,\n\nYour generated password is: $password\n\nThank you!";
+
+if(!$mail->send()) {
+    echo $mail->ErrorInfo;
+} else {
+    echo "Email sent!";
+}
+
+
+                                 include("connections.php");
 
                                 mysqli_query($connections, "INSERT INTO tbl_user(first_name, middle_name, last_name, gender, preffix, seven_digit, email, password, account_type) 
                                 
                                 VALUES('$first_name', '$middle_name', '$last_name', '$gender', '$preffix', '$seven_digit', '$email', '$password', '2') ");
 
                                 echo "<script>window.location.href='success.php'; </script>";
-                            
+
+                                }
                             }
                         }
                     }
@@ -110,7 +141,7 @@ if(isset($_POST["btnRegister"])){
             }
         }
     }
-}
+
 
 ?>
 
