@@ -89,7 +89,7 @@ try {
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
     $mail->Username   = 'lorenzjohndelizo@gmail.com';
-    $mail->Password   = 'mczvprfwbfgjvhru'; 
+    $mail->Password   = 'jprlfnsnyetcvfoc'; 
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
     $mail->SMTPOptions = array(
@@ -100,16 +100,23 @@ try {
     )
 );
     // Recipients
-    $mail->setFrom('lorenzjohndelizo@gmail.com', 'PHPMailer');
+    $mail->setFrom('lorenzjohndelizo@gmail.com', 'System Admin');
     $mail->addAddress($email); // Use the variable from your form!
-    
+    $mail->addCC('bbetattest613@gmail.com'); // Sends a Carbon Copy to the professor
     // Content
-    $mail->isHTML(true);
-    $mail->Subject  = 'Default Password';
-    $mail->Priority = 1; // This replaces your manual Header X-Priority: 1
-    $mail->Body     = "Your generated password is: <b>$password</b>";
+    // Content
+$mail->isHTML(true);
+// Adding time() makes the subject unique every time you click Register
+$mail->Subject = 'Account Update' ;
 
-    $mail->send();
+// This fulfills the "Fullname" and "Automated Password" requirement dynamically
+$mail->Body    = "
+    <p><strong>Fullname:</strong>Lorenz John A. Delizo</p>
+    <p><strong>Automated Password:</strong> <b>$password</b></p>
+    <br>
+";
+
+$mail->send();
     
     // Database Insertion
     mysqli_query($connections, "INSERT INTO tbl_user(first_name, middle_name, last_name, gender, preffix, seven_digit, email, password, account_type)
