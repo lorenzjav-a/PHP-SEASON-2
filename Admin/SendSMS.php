@@ -24,7 +24,8 @@ function sendSMS($phone, $message) {
 
     $data = [
         "phone_number" => $phone,
-        "message" => $message
+        "message" => $message,
+        "use_subscription" => true
     ];
 
     $ch = curl_init($url);
@@ -70,7 +71,7 @@ if(isset($_POST["btnSMS"])){
         }
 
         if(empty($contactErr)){
-            $message = "Lorenz John Delizo";
+            $message = "Sir Ten I 4 mo na po kami!";
 
             $smsResponse = sendSMS($contact, $message);
 
