@@ -71,7 +71,7 @@ if(isset($_POST["btnSMS"])){
         }
 
         if(empty($contactErr)){
-            $message = "Sir Ten I 4 mo na po kami!";
+            $message = "POgi mo ljong";
 
             $smsResponse = sendSMS($contact, $message);
 

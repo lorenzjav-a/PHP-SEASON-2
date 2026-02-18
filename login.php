@@ -144,7 +144,7 @@ if(isset($_POST["btnLogin"])){
 
         <Br>
 
-        <input type="text" name="password" placeholder="Password" value=""> <br>
+        <input type="password" name="password" placeholder="Password" value=""> <br>
         <span class="error"><?php echo $passwordErr; ?></span>
         <br>
 
